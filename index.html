@@ -90,6 +90,7 @@
 			var aInfo = gChapas[id];
 			
 			$('#picture-party').attr('src', aInfo.img);
+			$('#picture-party').show();			
 			$('#nome').html(aInfo.nome);
 			$('#chapa').html(id);
 			
@@ -125,25 +126,25 @@
 		}
 		
 		function branco() {
-			avisoFim();
+			escolhe(0);
+			confirma();
 		}
 		
 		function resetChapa() {
 			gVoto = 0;
 			$('#nome').empty();
 			$('#chapa').empty();
-			$('#picture-party').attr('src', '');
+			$('#picture-party').hide();
 		}
 		
 		function tocaSomFinal() {
-			document.getElementById('som').play();
+			//document.getElementById('som').play();
 			
-			/*
 			try {
 				var som = new Media('./som.mp3', function onSuccess() {}, function onError(error) { $('#admin-bar').html('ERRO: ' + error.message); });
 				som.play();
 			} catch(e) {}
-			*/
+			
 		}
 		
 		function avisoFim() {
