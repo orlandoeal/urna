@@ -73,7 +73,7 @@
     
     <script type="text/javascript">
 		var gChapas = {
-			'0': {img: './imgs/chapa1.png', nome: 'Gabriele Bevilacqua'},
+			'0': {img: './imgs/chapa1.png', nome: 'Votos em branco'},
 			'1': {img: './imgs/chapa1.png', nome: 'Gabriele e Amir'},
 			'2': {img: 'http://placehold.it/450x352', nome: 'Gabriele Bevilacqua 2'},
 			'3': {img: 'http://placehold.it/450x353', nome: 'Gabriele Bevilacqua 3'},
@@ -141,7 +141,7 @@
 			//document.getElementById('som').play();
 			
 			try {
-				var som = new Media('./som.mp3', function onSuccess() {}, function onError(error) { $('#admin-bar').html('ERRO: ' + error.message); });
+				var som = new Media('/android_asset/www/som.mp3', function onSuccess() {}, function onError(error) { $('#admin-bar').html('ERRO: ' + error.message); });
 				som.play();
 			} catch(e) {}
 			
@@ -168,6 +168,7 @@
 		function adminReset() {
 			if(confirm('Apagar todos os votos?')) {
 				localStorage.setItem("votos", JSON.stringify({}));
+				admiMostra();
 			}
 		}
 		
