@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Votação CIV</title>
+
+    <!-- jQuery and jQueryUI -->
+    <script type="text/javascript" src="./js/jquery/jquery.min.js"></script>
+		
+    <!-- Codebot -->
+    <link href="./css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<div id="wrapper">
+		<header><h1>Votação CIV - Escolha de chapa</h1></header>
+		<div id="content">
+			<div id="picture">
+				<img id="picture-party" src="" width="450" height="350" />
+				<p>Nome: <span id="nome"></span></p>
+				<p>Chapa: <span id="chapa"></span></p>
+				<hr/>
+				<p>Tecle VERDE para confirmar.</p>
+				<p>Tecle LARANJA para corrigir.</p>
+			</div>
+			
+			<div id="keyboard">
+				<table cellspacing="20" cellpadding="5" width="100%" style="text-align: center;">
+					<tr>
+						<td><a href="javascript:void(0);" onclick="escolhe(1);">1</a></td>
+						<td><a href="javascript:void(0);" onclick="escolhe(2);">2</a></td>
+						<td><a href="javascript:void(0);" onclick="escolhe(3);">3</a></td>
+					</tr>
+					<tr>
+						<td><a href="javascript:void(0);" onclick="escolhe(4);">4</a></td>
+						<td><a href="javascript:void(0);" onclick="escolhe(5);">5</a></td>
+						<td><a href="javascript:void(0);" onclick="escolhe(6);">6</a></td>
+					</tr>
+					<tr>
+						<td><a href="javascript:void(0);" onclick="escolhe(7);">7</a></td>
+						<td><a href="javascript:void(0);" onclick="escolhe(8);">8</a></td>
+						<td><a href="javascript:void(0);" onclick="escolhe(9);">9</a></td>
+					</tr>
+					<tr>
+						<td style="border: none;"></td>
+						<td><a href="javascript:void(0);" onclick="escolhe(0);">0</a></td>
+						<td style="border: none;"></td>
+					</tr>
+					<tr>
+						<td style="background: #fff;"><a href="javascript:void(0);" onclick="branco();">Branco</a></td>
+						<td style="background: #ffa500;"><a href="javascript:void(0);" onclick="corrige();">Corrige</a></td>
+						<td style="background: #00fc00;"><a href="javascript:void(0);" onclick="confirma();">Confirma</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div id="fim">FIM</div>
+	
+	<div id="admin-bar"><a href="javascript:void(0);" onclick="admiMostra();">[A]</a></div>
+	<div id="admin">
+		<h2>Controle</h2>
+		<li><a href="javascript:void(0);" onclick="adminReset();">Zerar votação (apaga tudo!)</a></li>
+		
+		<h2>Resultados</h2>
+		<div id="resultados" style="margin: 0 0 20px 0;"></div>
+		
+		<a href="javascript:void(0);" onclick="adminVolta();">Voltar</a>
+	</div>
+	
+	<audio id="som" src="./som.mp3"></audio>
+    
+    <script type="text/javascript">
+		var gChapas = {
+			'0': {img: './imgs/chapa1.png', nome: 'Gabriele Bevilacqua'},
+			'1': {img: './imgs/chapa1.png', nome: 'Gabriele e Amir'},
+			'2': {img: 'http://placehold.it/450x352', nome: 'Gabriele Bevilacqua 2'},
+			'3': {img: 'http://placehold.it/450x353', nome: 'Gabriele Bevilacqua 3'},
+			'4': {img: 'http://placehold.it/450x354', nome: 'Gabriele Bevilacqua 4'},
+			'5': {img: 'http://placehold.it/450x355', nome: 'Gabriele Bevilacqua 5'},
+			'6': {img: 'http://placehold.it/450x356', nome: 'Gabriele Bevilacqua 6'},
+			'7': {img: 'http://placehold.it/450x357', nome: 'Gabriele Bevilacqua 7'},
+			'8': {img: 'http://placehold.it/450x358', nome: 'Gabriele Bevilacqua 8'},
+			'9': {img: 'http://placehold.it/450x359', nome: 'Gabriele Bevilacqua 9'}
+		}
+		var gVoto = 0; // branco
+		
+		function escolhe(id) {
+			var aInfo = gChapas[id];
+			
+			$('#picture-party').attr('src', aInfo.img);
+			$('#nome').html(aInfo.nome);
+			$('#chapa').html(id);
+			
+			gVoto = id;
+		}
+		
+		function getDadosVotacao() {
+			var votos = JSON.parse(localStorage.getItem("votos"));
+			
+			if(!votos) {
+				localStorage.setItem("votos", {});
+				votos = {};
+			}
+			
+			return votos;
+		}
+		
+		function confirma() {
+			avisoFim();
+			
+			var votos = getDadosVotacao();
+
+			if(!votos[gVoto]) {
+				votos[gVoto] = 0;
+			}
+			
+			votos[gVoto] += 1;
+			localStorage.setItem("votos", JSON.stringify(votos));
+		}
+		
+		function corrige() {
+			resetChapa();
+		}
+		
+		function branco() {
+			avisoFim();
+		}
+		
+		function resetChapa() {
+			gVoto = 0;
+			$('#nome').empty();
+			$('#chapa').empty();
+			$('#picture-party').attr('src', '');
+		}
+		
+		function tocaSomFinal() {
+			document.getElementById('som').play();
+			
+			/*
+			try {
+				var som = new Media('./som.mp3', function onSuccess() {}, function onError(error) { $('#admin-bar').html('ERRO: ' + error.message); });
+				som.play();
+			} catch(e) {}
+			*/
+		}
+		
+		function avisoFim() {
+			$('#wrapper').hide();
+			$('#fim').show();
+			
+			tocaSomFinal();
+			
+			setTimeout(function() {
+				resetChapa();
+				$('#fim').hide();
+				$('#wrapper').show();
+			}, 5000);
+		}
+		
+		function admiMostra() {
+			$('#admin').show();
+			adminResultados();
+		}
+		
+		function adminReset() {
+			if(confirm('Apagar todos os votos?')) {
+				localStorage.setItem("votos", JSON.stringify({}));
+			}
+		}
+		
+		function adminResultados() {
+			var votos = getDadosVotacao();
+			var dados = '';
+			
+			for(var chapa in votos) {
+				dados += 'Chapa ' + chapa + ' ('+gChapas[chapa].nome+'): ' + votos[chapa] + ' votos. <br/>';
+			}
+			$('#resultados').html(dados);
+		}
+		
+		function adminVolta() {
+			$('#admin').hide();
+		}
+		
+		function suportaLocalStorage() {
+		  try {
+			return 'localStorage' in window && window['localStorage'] !== null;
+		  } catch (e) {
+			return false;
+		  }
+		}
+		
+		if(!suportaLocalStorage()) {
+			$('#admin-bar').html('ERRO: local storage!');
+		}
+	</script>
+</body>
+</html>
