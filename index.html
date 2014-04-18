@@ -25,25 +25,25 @@
 			</div>
 			
 			<div id="keyboard">
-				<table cellspacing="20" cellpadding="5" width="100%" style="text-align: center;">
+				<table cellspacing="20" cellpadding="5" width="100%" style="text-align: center;" id="tabela">
 					<tr>
-						<td><a href="javascript:void(0);" onclick="escolhe(1);">1</a></td>
-						<td><a href="javascript:void(0);" onclick="escolhe(2);">2</a></td>
-						<td><a href="javascript:void(0);" onclick="escolhe(3);">3</a></td>
+						<td data-num="1">1</td>
+						<td data-num="2">2</td>
+						<td data-num="3">3</td>
 					</tr>
 					<tr>
-						<td><a href="javascript:void(0);" onclick="escolhe(4);">4</a></td>
-						<td><a href="javascript:void(0);" onclick="escolhe(5);">5</a></td>
-						<td><a href="javascript:void(0);" onclick="escolhe(6);">6</a></td>
+						<td data-num="4">4</td>
+						<td data-num="5">5</td>
+						<td data-num="6">6</td>
 					</tr>
 					<tr>
-						<td><a href="javascript:void(0);" onclick="escolhe(7);">7</a></td>
-						<td><a href="javascript:void(0);" onclick="escolhe(8);">8</a></td>
-						<td><a href="javascript:void(0);" onclick="escolhe(9);">9</a></td>
+						<td data-num="7">7</td>
+						<td data-num="8">8</td>
+						<td data-num="9">9</td>
 					</tr>
 					<tr>
 						<td style="border: none;"></td>
-						<td><a href="javascript:void(0);" onclick="escolhe(0);">0</a></td>
+						<td data-num="0">0</td>
 						<td style="border: none;"></td>
 					</tr>
 					<tr>
@@ -75,16 +75,16 @@
 		var gChapas = {
 			'0': {img: './imgs/chapa1.png', nome: 'Votos em branco'},
 			'1': {img: './imgs/chapa1.png', nome: 'Gabriele e Amir'},
-			'2': {img: 'http://placehold.it/450x352', nome: 'Gabriele Bevilacqua 2'},
-			'3': {img: 'http://placehold.it/450x353', nome: 'Gabriele Bevilacqua 3'},
-			'4': {img: 'http://placehold.it/450x354', nome: 'Gabriele Bevilacqua 4'},
-			'5': {img: 'http://placehold.it/450x355', nome: 'Gabriele Bevilacqua 5'},
-			'6': {img: 'http://placehold.it/450x356', nome: 'Gabriele Bevilacqua 6'},
-			'7': {img: 'http://placehold.it/450x357', nome: 'Gabriele Bevilacqua 7'},
-			'8': {img: 'http://placehold.it/450x358', nome: 'Gabriele Bevilacqua 8'},
-			'9': {img: 'http://placehold.it/450x359', nome: 'Gabriele Bevilacqua 9'}
+			'2': {img: './imgs/chapa2.png', nome: 'Iopets'},
+			'3': {img: './imgs/chapa3.png', nome: 'Black Block Albino'},
+			'4': {img: './imgs/chapa4.png', nome: 'Cadinho Pirata'},
+			'5': {img: './imgs/chapa5.png', nome: 'Diario de Santa Maria'},
+			'6': {img: './imgs/chapa6.png', nome: 'RBS'},
+			'7': {img: './imgs/chapa7.png', nome: 'Jorge'},
+			'8': {img: './imgs/chapa8.png', nome: 'Alvaro'},
+			'9': {img: './imgs/chapa1.png', nome: 'Gabriele e Amir'}
 		}
-		var gVoto = 0; // branco
+		var gVoto = -1; // branco
 		
 		function escolhe(id) {
 			var aInfo = gChapas[id];
@@ -109,7 +109,12 @@
 		}
 		
 		function confirma() {
-			avisoFim();
+			if(gVoto < 0) {
+                alert('Escolha uma chapa!');
+                return;
+            }
+            
+            avisoFim();
 			
 			var votos = getDadosVotacao();
 
@@ -127,7 +132,6 @@
 		
 		function branco() {
 			escolhe(0);
-			confirma();
 		}
 		
 		function resetChapa() {
@@ -138,7 +142,7 @@
 		}
 		
 		function tocaSomFinal() {
-			//document.getElementById('som').play();
+			document.getElementById('som').play();
 			
 			try {
 				var som = new Media('/android_asset/www/som.mp3', function onSuccess() {}, function onError(error) { $('#admin-bar').html('ERRO: ' + error.message); });
@@ -197,6 +201,10 @@
 		if(!suportaLocalStorage()) {
 			$('#admin-bar').html('ERRO: local storage!');
 		}
+        
+        $('#tabela td').click(function(e) {
+            escolhe($(this).data('num'));
+        });
 	</script>
 </body>
 </html>

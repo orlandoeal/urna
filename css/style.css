@@ -38,6 +38,9 @@ header {
 #keyboard table td {
 	border: 2px solid #000;
 	height: 10%;
+    font-weight: bolder;
+	font-size: 2em;
+	color: #000;
 }
 
 #keyboard a,
@@ -46,7 +49,6 @@ header {
 #keyboard a:visited {
 	text-decoration: none;
 	font-weight: bolder;
-	font-size: 2em;
 	color: #000;
 }
 
