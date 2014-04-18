@@ -1,0 +1,95 @@
+body {
+	margin: 0;
+	font-family: Verdana;
+}
+
+#wrapper {
+	width: 100%;
+	height: 100%;
+}
+
+header {
+	width: 100%;
+	clear: both;
+	text-align: center;
+	color: #000;
+}
+
+#picture {
+	border: 3px #000 solid;
+	width: 49%;
+	float: left;
+}
+
+#picture img {
+	display: block;
+	margin: 0 auto;
+}
+
+#picture span {
+	font-weight: bold;
+}
+
+#keyboard {
+	width: 49%;
+	float: left;
+}
+
+#keyboard table td {
+	border: 2px solid #000;
+	height: 10%;
+    font-weight: bolder;
+	font-size: 2em;
+	color: #000;
+}
+
+#keyboard a,
+#keyboard a:active,
+#keyboard a:hover,
+#keyboard a:visited {
+	text-decoration: none;
+	font-weight: bolder;
+	color: #000;
+}
+
+#fim {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	position: absolute;
+	top: 0;
+	height: 0;
+	z-index: 10;
+	color: #000;
+	font-size: 10em;
+	background: #fff;
+	display: none;
+	padding-top: 10%;
+}
+
+#admin {
+	display: none;
+	width: 600px;
+	height: 400px;
+	background: #fcfcfc;
+	position: absolute;
+	top: 0;
+	overflow: auto;
+	border: 4px solid #ff0000;
+	padding: 10px;
+}
+
+#admin-bar {
+	position: absolute;
+	top: 0;
+	height: 0;
+	width: 50px;
+	height: 50px;
+}
+
+#admin-bar a,
+#admin-bar a:active,
+#admin-bar a:hover,
+#admin-bar a:visited {
+	color: #cfcfcf;
+}

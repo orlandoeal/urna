@@ -1,71 +1,210 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Urna by Dovyski</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Votação CIV</title>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Urna</h1>
-        <p>Simulador de urna eletronica</p>
+    <!-- jQuery and jQueryUI -->
+    <script type="text/javascript" src="./js/jquery/jquery.min.js"></script>
+		
+    <!-- Codebot -->
+    <link href="./css/style.css" rel="stylesheet" type="text/css">
+</head>
 
-        <p class="view"><a href="https://github.com/Dovyski/urna">View the Project on GitHub <small>Dovyski/urna</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/Dovyski/urna/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/Dovyski/urna/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/Dovyski/urna">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/Dovyski">Dovyski</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
+<body>
+	<div id="wrapper">
+		<header><h1>Votação CIV - Escolha de chapa</h1></header>
+		<div id="content">
+			<div id="picture">
+				<img id="picture-party" src="" width="450" height="350" />
+				<p>Nome: <span id="nome"></span></p>
+				<p>Chapa: <span id="chapa"></span></p>
+				<hr/>
+				<p>Tecle VERDE para confirmar.</p>
+				<p>Tecle LARANJA para corrigir.</p>
+			</div>
+			
+			<div id="keyboard">
+				<table cellspacing="20" cellpadding="5" width="100%" style="text-align: center;" id="tabela">
+					<tr>
+						<td data-num="1">1</td>
+						<td data-num="2">2</td>
+						<td data-num="3">3</td>
+					</tr>
+					<tr>
+						<td data-num="4">4</td>
+						<td data-num="5">5</td>
+						<td data-num="6">6</td>
+					</tr>
+					<tr>
+						<td data-num="7">7</td>
+						<td data-num="8">8</td>
+						<td data-num="9">9</td>
+					</tr>
+					<tr>
+						<td style="border: none;"></td>
+						<td data-num="0">0</td>
+						<td style="border: none;"></td>
+					</tr>
+					<tr>
+						<td style="background: #fff;"><a href="javascript:void(0);" onclick="branco();">Branco</a></td>
+						<td style="background: #ffa500;"><a href="javascript:void(0);" onclick="corrige();">Corrige</a></td>
+						<td style="background: #00fc00;"><a href="javascript:void(0);" onclick="confirma();">Confirma</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div id="fim">FIM</div>
+	
+	<div id="admin-bar"><a href="javascript:void(0);" onclick="admiMostra();">[A]</a></div>
+	<div id="admin">
+		<h2>Controle</h2>
+		<li><a href="javascript:void(0);" onclick="adminReset();">Zerar votação (apaga tudo!)</a></li>
+		
+		<h2>Resultados</h2>
+		<div id="resultados" style="margin: 0 0 20px 0;"></div>
+		
+		<a href="javascript:void(0);" onclick="adminVolta();">Voltar</a>
+	</div>
+	
+	<audio id="som" src="./som.mp3"></audio>
     
-  </body>
+    <script type="text/javascript">
+		var gChapas = {
+			'0': {img: './imgs/chapa1.png', nome: 'Votos em branco'},
+			'1': {img: './imgs/chapa1.png', nome: 'Gabriele e Amir'},
+			'2': {img: './imgs/chapa2.png', nome: 'Iopets'},
+			'3': {img: './imgs/chapa3.png', nome: 'Black Block Albino'},
+			'4': {img: './imgs/chapa4.png', nome: 'Cadinho Pirata'},
+			'5': {img: './imgs/chapa5.png', nome: 'Diario de Santa Maria'},
+			'6': {img: './imgs/chapa6.png', nome: 'RBS'},
+			'7': {img: './imgs/chapa7.png', nome: 'Jorge'},
+			'8': {img: './imgs/chapa8.png', nome: 'Alvaro'},
+			'9': {img: './imgs/chapa1.png', nome: 'Gabriele e Amir'}
+		}
+		var gVoto = -1; // branco
+		
+		function escolhe(id) {
+			var aInfo = gChapas[id];
+			
+			$('#picture-party').attr('src', aInfo.img);
+			$('#picture-party').show();			
+			$('#nome').html(aInfo.nome);
+			$('#chapa').html(id);
+			
+			gVoto = id;
+		}
+		
+		function getDadosVotacao() {
+			var votos = JSON.parse(localStorage.getItem("votos"));
+			
+			if(!votos) {
+				localStorage.setItem("votos", {});
+				votos = {};
+			}
+			
+			return votos;
+		}
+		
+		function confirma() {
+			if(gVoto < 0) {
+                alert('Escolha uma chapa!');
+                return;
+            }
+            
+            avisoFim();
+			
+			var votos = getDadosVotacao();
+
+			if(!votos[gVoto]) {
+				votos[gVoto] = 0;
+			}
+			
+			votos[gVoto] += 1;
+			localStorage.setItem("votos", JSON.stringify(votos));
+		}
+		
+		function corrige() {
+			resetChapa();
+		}
+		
+		function branco() {
+			escolhe(0);
+		}
+		
+		function resetChapa() {
+			gVoto = 0;
+			$('#nome').empty();
+			$('#chapa').empty();
+			$('#picture-party').hide();
+		}
+		
+		function tocaSomFinal() {
+			document.getElementById('som').play();
+			
+			try {
+				var som = new Media('/android_asset/www/som.mp3', function onSuccess() {}, function onError(error) { $('#admin-bar').html('ERRO: ' + error.message); });
+				som.play();
+			} catch(e) {}
+			
+		}
+		
+		function avisoFim() {
+			$('#wrapper').hide();
+			$('#fim').show();
+			
+			tocaSomFinal();
+			
+			setTimeout(function() {
+				resetChapa();
+				$('#fim').hide();
+				$('#wrapper').show();
+			}, 5000);
+		}
+		
+		function admiMostra() {
+			$('#admin').show();
+			adminResultados();
+		}
+		
+		function adminReset() {
+			if(confirm('Apagar todos os votos?')) {
+				localStorage.setItem("votos", JSON.stringify({}));
+				admiMostra();
+			}
+		}
+		
+		function adminResultados() {
+			var votos = getDadosVotacao();
+			var dados = '';
+			
+			for(var chapa in votos) {
+				dados += 'Chapa ' + chapa + ' ('+gChapas[chapa].nome+'): ' + votos[chapa] + ' votos. <br/>';
+			}
+			$('#resultados').html(dados);
+		}
+		
+		function adminVolta() {
+			$('#admin').hide();
+		}
+		
+		function suportaLocalStorage() {
+		  try {
+			return 'localStorage' in window && window['localStorage'] !== null;
+		  } catch (e) {
+			return false;
+		  }
+		}
+		
+		if(!suportaLocalStorage()) {
+			$('#admin-bar').html('ERRO: local storage!');
+		}
+        
+        $('#tabela td').click(function(e) {
+            escolhe($(this).data('num'));
+        });
+	</script>
+</body>
 </html>
