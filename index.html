@@ -6,7 +6,7 @@
 
     <!-- jQuery and jQueryUI -->
     <script type="text/javascript" src="./js/jquery/jquery.min.js"></script>
-		
+
     <!-- Codebot -->
     <link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
@@ -20,10 +20,10 @@
 				<p>Nome: <span id="nome"></span></p>
 				<p>Chapa: <span id="chapa"></span></p>
 				<hr/>
-				<p>Tecle VERDE para confirmar.</p>
+				<p>Tecle VERDE para confirmar..</p>
 				<p>Tecle LARANJA para corrigir.</p>
 			</div>
-			
+
 			<div id="keyboard">
 				<table cellspacing="20" cellpadding="5" width="100%" style="text-align: center;" id="tabela">
 					<tr>
@@ -55,22 +55,22 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div id="fim">FIM</div>
-	
+
 	<div id="admin-bar"><a href="javascript:void(0);" onclick="admiMostra();">[A]</a></div>
 	<div id="admin">
 		<h2>Controle</h2>
 		<li><a href="javascript:void(0);" onclick="adminReset();">Zerar votação (apaga tudo!)</a></li>
-		
+
 		<h2>Resultados</h2>
 		<div id="resultados" style="margin: 0 0 20px 0;"></div>
-		
+
 		<a href="javascript:void(0);" onclick="adminVolta();">Voltar</a>
 	</div>
-	
+
 	<audio id="som" src="./som.mp3"></audio>
-    
+
     <script type="text/javascript">
 		var gChapas = {
 			'0': {img: './imgs/chapa1.png', nome: 'Votos em branco'},
@@ -85,111 +85,111 @@
 			'9': {img: './imgs/chapa1.png', nome: 'Gabriele e Amir'}
 		}
 		var gVoto = -1; // branco
-		
+
 		function escolhe(id) {
 			var aInfo = gChapas[id];
-			
+
 			$('#picture-party').attr('src', aInfo.img);
-			$('#picture-party').show();			
+			$('#picture-party').show();
 			$('#nome').html(aInfo.nome);
 			$('#chapa').html(id);
-			
+
 			gVoto = id;
 		}
-		
+
 		function getDadosVotacao() {
 			var votos = JSON.parse(localStorage.getItem("votos"));
-			
+
 			if(!votos) {
 				localStorage.setItem("votos", {});
 				votos = {};
 			}
-			
+
 			return votos;
 		}
-		
+
 		function confirma() {
 			if(gVoto < 0) {
                 alert('Escolha uma chapa!');
                 return;
             }
-            
+
             avisoFim();
-			
+
 			var votos = getDadosVotacao();
 
 			if(!votos[gVoto]) {
 				votos[gVoto] = 0;
 			}
-			
+
 			votos[gVoto] += 1;
 			localStorage.setItem("votos", JSON.stringify(votos));
 		}
-		
+
 		function corrige() {
 			resetChapa();
 		}
-		
+
 		function branco() {
 			escolhe(0);
 		}
-		
+
 		function resetChapa() {
 			gVoto = 0;
 			$('#nome').empty();
 			$('#chapa').empty();
 			$('#picture-party').hide();
 		}
-		
+
 		function tocaSomFinal() {
 			document.getElementById('som').play();
-			
+
 			try {
 				var som = new Media('/android_asset/www/som.mp3', function onSuccess() {}, function onError(error) { $('#admin-bar').html('ERRO: ' + error.message); });
 				som.play();
 			} catch(e) {}
-			
+
 		}
-		
+
 		function avisoFim() {
 			$('#wrapper').hide();
 			$('#fim').show();
-			
+
 			tocaSomFinal();
-			
+
 			setTimeout(function() {
 				resetChapa();
 				$('#fim').hide();
 				$('#wrapper').show();
 			}, 5000);
 		}
-		
+
 		function admiMostra() {
 			$('#admin').show();
 			adminResultados();
 		}
-		
+
 		function adminReset() {
 			if(confirm('Apagar todos os votos?')) {
 				localStorage.setItem("votos", JSON.stringify({}));
 				admiMostra();
 			}
 		}
-		
+
 		function adminResultados() {
 			var votos = getDadosVotacao();
 			var dados = '';
-			
+
 			for(var chapa in votos) {
 				dados += 'Chapa ' + chapa + ' ('+gChapas[chapa].nome+'): ' + votos[chapa] + ' votos. <br/>';
 			}
 			$('#resultados').html(dados);
 		}
-		
+
 		function adminVolta() {
 			$('#admin').hide();
 		}
-		
+
 		function suportaLocalStorage() {
 		  try {
 			return 'localStorage' in window && window['localStorage'] !== null;
@@ -197,11 +197,11 @@
 			return false;
 		  }
 		}
-		
+
 		if(!suportaLocalStorage()) {
 			$('#admin-bar').html('ERRO: local storage!');
 		}
-        
+
         $('#tabela td').click(function(e) {
             escolhe($(this).data('num'));
         });
