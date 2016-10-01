@@ -1,3 +1,5 @@
+@charset "uft-8";
+
 body {
 	margin: 0;
 	font-family: Verdana;
@@ -15,41 +17,50 @@ header {
 	color: #000;
 }
 
-#picture {
-	border: 3px #000 solid;
-	width: 49%;
-	float: left;
+#logo{
+	width: 120px;
+}
+
+#content {
+	border: 2px #000 solid;
+}
+
+#tabela{
+	margin-top: 25px;
 }
 
 #picture img {
+	margin-top: 10px;
+	margin-left: 100px;
+	margin-bottom: 55px;
 	display: block;
-	margin: 0 auto;
 }
 
-#picture span {
+#picture p{
+	font-size: 20pt;
+	position: relative;
+}
+
+#picture span {	
+	font-size: 25pt;
 	font-weight: bold;
 }
 
 #keyboard {
 	width: 49%;
-	float: left;
+	position: relative;
+	display: block;
 }
 
 #keyboard table td {
-	border: 2px solid #000;
-	height: 10%;
+	border: 2px solid rgba(0, 0, 0, .5);
     font-weight: bolder;
 	font-size: 2em;
 	color: #000;
 }
 
-#keyboard a,
-#keyboard a:active,
-#keyboard a:hover,
-#keyboard a:visited {
-	text-decoration: none;
-	font-weight: bolder;
-	color: #000;
+.btn{
+	width: 100%;
 }
 
 #fim {
@@ -80,7 +91,7 @@ header {
 }
 
 #admin-bar {
-	position: absolute;
+	position: relative;
 	top: 0;
 	height: 0;
 	width: 50px;
